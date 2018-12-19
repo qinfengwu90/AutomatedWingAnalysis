@@ -1,6 +1,5 @@
-function [bw_label] = wingMorphFilter(img, label)
+function bwLabel = wingMorphFilter(rawImage, label)
 
-    image(:,:) = img(:,:,1); 
     label(label == 3) = 2;
     label(label == 4) = 2;
     rgb_img = label2rgb(label);
@@ -28,8 +27,8 @@ function [bw_label] = wingMorphFilter(img, label)
 %     bw3 = bw_img;
 %     bw3(Ld2 == 0) = 0;
 %     imshow(bw3)
-    bw_label = bwlabel(bw_img);
-    imshow(label2rgb(bw_label))
+    bwLabel = bwlabel(bw_img);
+    imshow(label2rgb(bwLabel))
 
     %bw_label(bw_label > 1) = 0;
     %image(bw_label ~= 1) = 0;

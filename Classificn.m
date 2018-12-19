@@ -15,43 +15,38 @@
 % 
 % TableFeaturesTraining = table(AreaLabels,PerimeterLabels,SolidityLabels,MajorAxisLengthLabels,MinorAxisLengthLabels,Labels);
 
-function [L, yfit] = Classificn(bw_label)
+function [bwLabel, yfit] = Classificn(bwLabel)
 
-load('trainedModelBT.mat');
+load('trainedModelBT.mat'); %What is this .mat file?
 
-
-%L = bwlabel(BW3);
-L = bw_label;
-L1 = L;
-[num_rows num_columns] = size(L);
-statsfilter = regionprops(L,'Area');
+[num_rows, num_columns] = size(bwLabel);
+statsfilter = regionprops(bwLabel,'Area');
 arealabelfilter = cat(1,statsfilter.Area);
-[sorteddistance sortedindex] = sort(arealabelfilter,'descend');
+[sortedDistance, sortedIndex] = sort(arealabelfilter,'descend');
 
 for i = 1:num_rows
     for j = 1:num_columns
-        if L(i,j) == sortedindex(1)
-            L(i,j) = 1;
-        elseif L(i,j) == sortedindex(2)
-            L(i,j) = 2;
-        elseif L(i,j) == sortedindex(3)
-            L(i,j) = 3;
-        elseif L(i,j) == sortedindex(4)
-            L(i,j) = 4;
-        elseif L(i,j) == sortedindex(5)
-            L(i,j) = 5;
-        elseif L(i,j) == sortedindex(6)
-            L(i,j) = 6;
-        elseif L(i,j) == sortedindex(7)
-            L(i,j) = 7;
+        if bwLabel(i,j) == sortedIndex(1)
+            bwLabel(i,j) = 1;
+        elseif bwLabel(i,j) == sortedIndex(2)
+            bwLabel(i,j) = 2;
+        elseif bwLabel(i,j) == sortedIndex(3)
+            bwLabel(i,j) = 3;
+        elseif bwLabel(i,j) == sortedIndex(4)
+            bwLabel(i,j) = 4;
+        elseif bwLabel(i,j) == sortedIndex(5)
+            bwLabel(i,j) = 5;
+        elseif bwLabel(i,j) == sortedIndex(6)
+            bwLabel(i,j) = 6;
+        elseif bwLabel(i,j) == sortedIndex(7)
+            bwLabel(i,j) = 7;
         else
-            L(i,j) = 0;
+            bwLabel(i,j) = 0;
         end
     end
 end
-L2 = L;
 
-stats = regionprops(L,'Area','Perimeter','Solidity','MajorAxisLength','MinorAxisLength','Centroid');
+stats = regionprops(bwLabel,'Area','Perimeter','Solidity','MajorAxisLength','MinorAxisLength','Centroid');
 AreaLabels = cat(1,stats.Area);
 PerimeterLabels = cat(1,stats.Perimeter);
 SolidityLabels = cat(1,stats.Solidity);
@@ -79,20 +74,20 @@ yfit = trainedModelBT.predictFcn(TableFeaturesTest);
 
 for i = 1:num_rows
     for j = 1:num_columns
-        if L(i,j) == 1
-            L(i,j) = yfit(1);
-        elseif L(i,j) == 2
-            L(i,j) = yfit(2);
-        elseif L(i,j) == 3
-            L(i,j) = yfit(3);
-        elseif L(i,j) == 4
-            L(i,j) = yfit(4);
-        elseif L(i,j) == 5
-            L(i,j) = yfit(5);
-        elseif L(i,j) == 6
-            L(i,j) = yfit(6);
-        elseif L(i,j) == 7
-            L(i,j) = yfit(7);
+        if bwLabel(i,j) == 1
+            bwLabel(i,j) = yfit(1);
+        elseif bwLabel(i,j) == 2
+            bwLabel(i,j) = yfit(2);
+        elseif bwLabel(i,j) == 3
+            bwLabel(i,j) = yfit(3);
+        elseif bwLabel(i,j) == 4
+            bwLabel(i,j) = yfit(4);
+        elseif bwLabel(i,j) == 5
+            bwLabel(i,j) = yfit(5);
+        elseif bwLabel(i,j) == 6
+            bwLabel(i,j) = yfit(6);
+        elseif bwLabel(i,j) == 7
+            bwLabel(i,j) = yfit(7);
         end
     end
 end
