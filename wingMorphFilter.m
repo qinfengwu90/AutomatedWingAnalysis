@@ -1,17 +1,19 @@
-function bwLabel = wingMorphFilter(rawImage, label)
+%%Description of the function
 
-    label(label == 3) = 2;
-    label(label == 4) = 2;
-    rgb_img = label2rgb(label);
-    bw_img = im2bw(rgb_img);
-    bw_img = imcomplement(bw_img);
-    bw_img = bwareafilt(bw_img,7);
-    bw_img = imfill(bw_img,'holes');
+function bwLabel = wingMorphFilter(segmentationMask)
+
+    segmentationMask(segmentationMask == 3) = 2;
+    segmentationMask(segmentationMask == 4) = 2;
+    rgbImage = label2rgb(segmentationMask);
+    bwImage = im2bw(rgbImage);
+    bwImage = imcomplement(bwImage);
+    bwImage = bwareafilt(bwImage,7);
+    bwImage = imfill(bwImage,'holes');
     se = strel('disk', 8);
-    bw_img = imerode(bw_img,se);
-    bw_img = imfill(bw_img,'holes');
-    bw_img = bwareafilt(bw_img,7);
-    bw_img = imdilate(bw_img,se);
+    bwImage = imerode(bwImage,se);
+    bwImage = imfill(bwImage,'holes');
+    bwImage = bwareafilt(bwImage,7);
+    bwImage = imdilate(bwImage,se);
 
 %     D = -bwdist(~bw_img);
 %     imshow(D,[])
@@ -27,8 +29,8 @@ function bwLabel = wingMorphFilter(rawImage, label)
 %     bw3 = bw_img;
 %     bw3(Ld2 == 0) = 0;
 %     imshow(bw3)
-    bwLabel = bwlabel(bw_img);
-    imshow(label2rgb(bwLabel))
+    bwLabel = bwlabel(bwImage);
+   % imshow(label2rgb(bwLabel))
 
     %bw_label(bw_label > 1) = 0;
     %image(bw_label ~= 1) = 0;

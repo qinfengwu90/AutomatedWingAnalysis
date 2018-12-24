@@ -1,19 +1,20 @@
 
-function [area_intervein, perimeter_intervein, eccentricity_intervein, major_intervein, minor_intervein, positional_feature_intervein] = interveinalFeaturesBasic(img, bw_label)
+function [area_intervein, perimeter_intervein, eccentricity_intervein, major_intervein, ...
+    minor_intervein, positional_feature_intervein] = interveinalFeaturesBasic(bwLabel)
 
 
 % image_red(:,:) = img(:,:,1);
 % image_green(:,:) = img(:,:,2);
 % image_blue(:,:) = img(:,:,3);
-stats = regionprops(bw_label,'Centroid', 'Area', 'Perimeter', 'Eccentricity' , 'MajorAxisLength', 'MinorAxisLength')
-centroids_intervein = cat(1,stats.Centroid)
-area_intervein = cat(1,stats.Area)
-perimeter_intervein = cat(1,stats.Area)
-eccentricity_intervein = cat(1,stats.Area)
-major_intervein = cat(1,stats.Area)
-minor_intervein = cat(1,stats.Area)
+stats = regionprops(bwLabel,'Centroid', 'Area', 'Perimeter', 'Eccentricity' , 'MajorAxisLength', 'MinorAxisLength');
+centroids_intervein = cat(1,stats.Centroid);
+area_intervein = cat(1,stats.Area);
+perimeter_intervein = cat(1,stats.Area);
+eccentricity_intervein = cat(1,stats.Area);
+major_intervein = cat(1,stats.Area);
+minor_intervein = cat(1,stats.Area);
 
-[dummy_sizex dummy_sizey] = size(centroids_intervein);
+[dummy_sizex, ~] = size(centroids_intervein);
 
 for i = 1:dummy_sizex
     for j = 1:dummy_sizex
